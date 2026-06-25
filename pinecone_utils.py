@@ -1,45 +1,47 @@
 import os
-
 from dotenv import load_dotenv
-
 from pinecone import Pinecone
-
 from sentence_transformers import SentenceTransformer
-
 
 load_dotenv()
 
-
-# Embedding Model
-
-embedding_model = SentenceTransformer(
-    "BAAI/bge-large-en-v1.5"
-)
+embedding_model = None
+index = None
 
 
-# Pinecone Client
+def get_embedding_model():
+    global embedding_model
 
-pc = Pinecone(
-    api_key=os.getenv("PINECONE_API_KEY")
-)
+    if embedding_model is None:
+        embedding_model = SentenceTransformer(
+            "BAAI/bge-large-en-v1.5"
+        )
+
+    return embedding_model
 
 
-index = pc.Index(
-    "meeting-memory"
-)
+def get_index():
+    global index
+
+    if index is None:
+        pc = Pinecone(
+            api_key=os.getenv("PINECONE_API_KEY")
+        )
+
+        index = pc.Index("meeting-memory")
+
+    return index
 
 # Store Function
 
-def store_memory(
-    meeting_id,
-    text
-):
+def store_memory(meeting_id, text):
 
-    embedding = embedding_model.encode(
-        text
-    ).tolist()
+    model = get_embedding_model()
+    pinecone_index = get_index()
 
-    index.upsert(
+    embedding = model.encode(text).tolist()
+
+    pinecone_index.upsert(
         vectors=[
             {
                 "id": meeting_id,
@@ -53,33 +55,22 @@ def store_memory(
 
 # Search Function
 
-def search_memory(
-    query,
-    top_k=3
-):
+def search_memory(query, top_k=3):
 
-    embedding = embedding_model.encode(
-        query
-    ).tolist()
+    model = get_embedding_model()
+    pinecone_index = get_index()
 
-    results = index.query(
+    embedding = model.encode(query).tolist()
 
+    results = pinecone_index.query(
         vector=embedding,
-
         top_k=top_k,
-
         include_metadata=True
-
     )
 
     memories = []
 
     for match in results["matches"]:
-
-        memories.append(
-
-            match["metadata"]["content"]
-        )
+        memories.append(match["metadata"]["content"])
 
     return memories
-
