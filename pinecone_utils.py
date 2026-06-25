@@ -14,8 +14,8 @@ def get_embedding_model():
 
     if embedding_model is None:
         embedding_model = SentenceTransformer(
-            "BAAI/bge-large-en-v1.5"
-        )
+    "sentence-transformers/all-MiniLM-L6-v2"
+)
 
     return embedding_model
 
@@ -28,7 +28,7 @@ def get_index():
             api_key=os.getenv("PINECONE_API_KEY")
         )
 
-        index = pc.Index("meeting-memory")
+        index = pc.Index("meeting-memory-v2")
 
     return index
 
