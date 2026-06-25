@@ -6,7 +6,10 @@ from state import MeetingState
 
 from prompts import ANALYSIS_PROMPT, CONTEXT_PROMPT, FOLLOWUP_PROMPT
 
-from pinecone_utils import search_memory
+from pinecone_utils import (
+    search_memory,
+    store_memory
+)
 
 from langgraph.graph import (
     StateGraph,
@@ -91,9 +94,16 @@ def request_approval(
     state: MeetingState
 ):
 
+    # Store current meeting into Pinecone
+    store_memory(
+        meeting_id=f"meeting-{hash(state['transcript'])}",
+        text=state["analysis"]
+    )
+
     return {
 
         "approval_status": "pending"
+
     }
 
 # Creating Graph

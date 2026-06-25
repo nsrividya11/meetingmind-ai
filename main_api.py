@@ -18,6 +18,8 @@ from supabase_utils import (
     complete_task
 )
 
+from pinecone_utils import store_memory
+
 app = FastAPI()
 
 app.add_middleware(
@@ -88,6 +90,11 @@ def process_meeting(
 
         user_id
 
+    )
+
+    store_memory(
+        str(meeting_id),
+        result["analysis"]
     )
 
     save_tasks(
