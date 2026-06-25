@@ -188,37 +188,30 @@ The LangGraph workflow consists of the following stages:
 
 # 📷 Application Screenshots
 
-> Add screenshots inside an `images/` folder and reference them below.
 
 ### Dashboard
 
-```
-images/dashboard.png
-```
+
+![Dashboard](Screenshots/Dashboard.png)
+
 
 ### Meeting Analysis
 
-```
-images/analysis.png
-```
 
-### Historical Context
+![MeetingAnalysis](Screenshots/MeetingAnalysis.png)
 
-```
-images/context.png
-```
 
-### Follow-up Email
+### Historical Context and Follow-up Email
 
-```
-images/email.png
-```
+
+![Historical Context and Follow-up Email](Screenshots/HistoricalContentandFollowUpEmail.png)
+
 
 ### Task Dashboard
 
-```
-images/tasks.png
-```
+
+![TaskDashboard](Screenshots/TaskDashboard.png)
+
 
 ---
 
