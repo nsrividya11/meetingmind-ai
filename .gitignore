@@ -1,0 +1,25 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.local
+
+# Python cache
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# Backend logs
+*.log
+
+# Frontend
+meetingmind-frontend/node_modules/
+meetingmind-frontend/.next/
+
+# OS
+.DS_Store
+Thumbs.db
